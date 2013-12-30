@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html manifest="Calendar.manifest"> 
+<head>
+<meta charset="utf-8" />
+<title>Client-side Calendar</title>
+
+<script src="js/jquery-1.4.2.min.js"></script>
+<script src="js/calendar.js"></script>
+<script src="js/jquery.fancybox-1.3.1.pack.js"></script>
+<script>
+$(document).ready(function () {
+	 cal= new Calendar($('#calendar'),null,null);
+	 $('.add-form').submit(function(){
+		 var record = new Array();
+		 record['when']=$('#when').val();
+		 record['where']=$('#where').val();
+		 record['what']=$('#what').val();
+		 record['about']=$('#about').val();
+		 cal.addEvent(record);
+		 return false;
+	});
+	//edit button
+	$('.edit-form').submit(function(){
+		 var record = new Array();
+		 record['id']=$('#id').val();
+		 record['when']=$('#when-edit').val();
+		 record['where']=$('#where-edit').val();
+		 record['what']=$('#what-edit').val();
+		 record['about']=$('#about-edit').val();
+		 cal.updateEvent(record);
+		 return false;
+	});
+	//delete button
+	$('#delete').click(function(){
+		 cal.deleteEvent($('#id').val());
+		 return false;
+	});
+	//prev button
+	$('.prev').click(function(){
+		cal.prev();
+		$('#time-title').text(cal.yearNumber +" "+ ( monthLabel[cal.monthNumber]) );
+	});	
+	//next button
+	$('.next').click(function(){
+		cal.next();
+		$('#time-title').text(cal.yearNumber +" "+ (monthLabel[cal.monthNumber]) );
+	})
+});
+</script>
+
+
+<link  type="text/css" href="css/fancybox/jquery.fancybox-1.3.1.css" rel="stylesheet"> 
+<link  type="text/css" href="css/style.css" rel="stylesheet"> 
+
+
+</head>
+<body>
+
+<div id="container">	
+	
+	<input class="prev" type="button" value="Previous"/>
+	<input class="next" type="button" value="Next"/>
+	<div id="time-title">
+	</div>
+	 
+	<div class="clear"></div>
+	
+	<noscript>
+		<span class="warning">JavaScript is turned off in your web browser. Turn it on to take full advantage of this site, then refresh the page.</span>
+	</noscript>
+	
+	<div id="content">
+		<div id="calendar">
+			<div class="calendar-row calendar-title">
+				<table>
+					<tr>
+						<td>
+						
+							Sunday
+							
+						</td>
+						
+						<td>
+						
+							Monday
+						
+						</td>
+						<td>
+						
+							Thuesday
+						
+						</td>
+						<td>
+						
+							Wednesday
+						
+						</td>
+						<td>
+						
+							Thursday
+						
+						</td>
+						<td>
+						
+							Friday
+						
+						</td>
+						<td>
+						
+							Saturday
+						</td>
+						
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+	<div style="display:none;">
+			<div id="add">
+				<form class="add-form" action="#" method="POST">
+					<label for="when">When:</label> 
+					<div class="when"></div>
+					<input type="hidden" id="when" value="2010-1-9" />
+					
+					<label for="what">What:</label> 
+					<input name="what"  id="what" type="text"  required placeholder="e.g. afternoon tea at Starbucks"/>
+										
+					<label for="where"  >Where:</label> 
+					<input name="where" id="where" type="text" required placeholder="e.g. Starbucks"/>
+					
+					<label for="about">About:</label> 
+					<textarea name="about" id="about" placeholder="e.g. don't be late"></textarea> 
+					
+					<input name="submit" type="submit" value="Add"/>
+				</form>
+			</div>
+	</div>
+	
+	<div style="display:none;">
+			<div id="edit">
+				<form class="edit-form" action="#" method="POST">
+					<label for="when">When:</label> 
+					<div class="when"></div>
+					
+					<input type="hidden" id="id" value="" />
+					<input type="hidden" id="when-edit" value="" />
+					
+					<label for="what">What:</label> 
+					<input name="what"  id="what-edit" type="text"  required placeholder="e.g. afternoon tea at Starbucks"/>
+					
+					<label for="where"  >Where:</label> 
+					<input name="where" id="where-edit" type="text" required placeholder="e.g. Starbucks"/>
+					
+					<label for="about">About:</label> 
+					<textarea name="about" id="about-edit" placeholder="e.g. don't be late"></textarea> 
+					
+					<input name="submit" type="submit" value="Update" />
+					
+					<a href="#" id="delete">Delete</a> 
+				</form>
+			</div>
+	</div>
+
+</div>
+	
+</body>
+</html>
